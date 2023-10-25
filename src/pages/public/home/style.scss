@@ -1,0 +1,48 @@
+.home-page{
+   background-image: url("../../../assets/images/_.jpeg");
+   background-repeat: no-repeat;
+   background-size: cover;
+   height: 700px;
+}
+nav{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo a h1{
+        color:rgb(157, 115, 65)
+    }
+    .sections{
+        display: flex;
+        align-items: center;
+        gap: 30px ;
+       
+        a{
+            color: rgb(157, 115, 65);
+        }
+    }
+    .home-btns{
+       a{
+        padding: 10px 20px;
+        background-color: transparent;
+        color: rgb(157, 115, 65);
+        border-radius: 10px;
+        border: 1px solid rgb(157, 115, 65);
+       margin-right: 20px;
+       }
+    }
+}
+
+.hero-aside{
+    margin-top: 196px;
+    h2{
+        padding: 10px 40px;
+        color: #ffffff;
+        max-width: 580px;
+        font-size: 48px;
+        text-align: center;
+        span{
+            color: rgb(184, 143, 94)
+        };
+    }
+}

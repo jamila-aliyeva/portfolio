@@ -1,0 +1,26 @@
+.dashboard-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h3{
+        font-size: 16px;
+        color: #3876BF;
+    }
+    .dashboard-top-bside{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        img{
+            max-width: 40px;
+            border-radius: 50%;
+        }
+        h4{
+            font-size: 16px;
+        color: #192655;
+        }
+    }
+}
+.dashboard-title{
+    color: #192655;
+    font-size: 38px;
+}

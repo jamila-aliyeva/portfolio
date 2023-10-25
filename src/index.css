@@ -1,0 +1,12 @@
+.container{
+    max-width: 1220px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+a{
+    text-decoration: none;
+}
+    ul{
+        list-style:none;
+    }
