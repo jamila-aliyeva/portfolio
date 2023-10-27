@@ -52,6 +52,6 @@ export const {
   useGetExperiencesQuery,
   useCreateExperienceMutation,
   useGetExperienceMutation,
-  useUpdateExperiencesMutation,
-  useDeleteExperiencesMutation,
+  useUpdateExperienceMutation,
+  useDeleteExperienceMutation,
 } = experienceQuery;

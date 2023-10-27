@@ -11,7 +11,10 @@ import {
 } from "antd";
 
 import {
-  useDeleteExperiencesMutation,
+  useDeleteExperienceMutation,
+  // useCreateExperienceMutation,
+  // useGetExperienceMutation,
+  // useUpdateExperienceMutation,
   useGetExperiencesQuery,
 } from "../../../redux/queries/experience";
 
@@ -33,8 +36,8 @@ const Experience = () => {
 
   // const [createExperience] = useCreateExperienceMutation();
   // const [getExperience] = useGetExperienceMutation();
-  // const [updateExperience] = useUpdateExperiencesMutation();
-  // const [deleteExperience] = useDeleteExperiencesMutation();
+  // const [updateExperience] = useUpdateExperienceMutation();
+  const [deleteExperience] = useDeleteExperienceMutation();
 
   const showModal = () => {
     setIsModalOpen(true);
