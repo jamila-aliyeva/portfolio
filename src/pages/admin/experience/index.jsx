@@ -167,7 +167,7 @@ const Experience = () => {
           }}
           form={form}>
           <Form.Item
-            label="workName"
+            label="Work Name"
             name="workName"
             rules={[
               {
@@ -179,7 +179,7 @@ const Experience = () => {
           </Form.Item>
 
           <Form.Item
-            label="companyName"
+            label="company Name"
             name="companyName"
             rules={[
               {
@@ -191,7 +191,7 @@ const Experience = () => {
           </Form.Item>
 
           <Form.Item
-            label="description"
+            label="Description"
             name="description"
             rules={[
               {
