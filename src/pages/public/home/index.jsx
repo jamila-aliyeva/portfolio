@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { HiBars3BottomRight, HiXMark } from "react-icons/hi2";
+
 import "./style.scss";
+import AOS from "aos";
 
 const HomePage = () => {
+  const [navOpen, setNavOpen] = useState(false);
+  useEffect(() => {
+    AOS.init({ duration: "2600" });
+  }, []);
   return (
     <section className="home-page">
       <div className="container">
@@ -9,31 +17,49 @@ const HomePage = () => {
           <nav>
             <div className="logo">
               <a href="/">
-                {/* <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Portfolio.hu_full_logo.png"
-                  alt=""
-                /> */}
-                <h1> PORFOLIO 🎈</h1>
+                <h1 data-aos="fade-down">PORFOLIO . 🎈</h1>
               </a>
             </div>
 
-            <div className="sections">
-              <Link to="/">Home</Link>
-              <Link to="/">About us</Link>
-              <Link to="/contact-us">Contact us</Link>
+            <div className={` nav_menu ${navOpen ? navOpen : null}`}>
+              <div className="sections" data-aos="fade-down">
+                <Link to="/" onClick={() => setNavOpen(false)}>
+                  Home
+                </Link>
+                <Link to="/" onClick={() => setNavOpen(false)}>
+                  About us
+                </Link>
+                <Link to="/contact-us" onClick={() => setNavOpen(false)}>
+                  Contact us
+                </Link>
+              </div>
+              <div className="home-btns" data-aos="fade-down">
+                <Link to="/login" onClick={() => setNavOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/register" onClick={() => setNavOpen(false)}>
+                  Register
+                </Link>
+              </div>
+              <div className="closeNav" onClick={() => setNavOpen(false)}>
+                <HiXMark color="white" size={35} />
+              </div>
             </div>
-            <div className="home-btns">
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </div>
+            <button className="openNav" onClick={() => setNavOpen(true)}>
+              <HiBars3BottomRight color="white" size={35} />
+            </button>
           </nav>
         </header>
         <main>
           <section className="hero-page">
             <div className="hero-aside">
-              <h2>
+              <h2 data-aos="fade-up-right">
                 Create your perfect <span>porfolio</span> with us
               </h2>
+              <p data-aos="fade-down-left">
+                Brand messsges are delevered and plannedbased on the questions
+                how , what , when to whom and where your brand strategy is.
+              </p>
             </div>
           </section>
         </main>

@@ -11,8 +11,10 @@ import { TOKEN, USER } from "../../../constants";
 import { useDispatch } from "react-redux";
 import request from "../../../sever";
 import { setAuth } from "../../../redux/slice/auth";
+import AOS from "aos";
 
 import "./style.scss";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -39,12 +41,17 @@ const LoginPage = () => {
     e.preventDefault();
     navigate("/register");
   };
+
+  useEffect(() => {
+    AOS.init({ duration: "1500" });
+  }, []);
+
   return (
     <section className="login-page">
       <div className="container">
         <div className="form-wrap">
           <div className="form-container">
-            <form onSubmit={login}>
+            <form onSubmit={login} data-aos="zoom-in">
               <h1>LoginPage</h1>
               <div className="social-icons">
                 <a href="">

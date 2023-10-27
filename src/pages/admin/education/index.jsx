@@ -19,7 +19,6 @@ import {
   educationName,
   updateEducation,
 } from "../../../redux/slice/education";
-import { Link } from "react-router-dom";
 
 const SkillsPage = () => {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 .login-page, .register{
-    background-color: #c9d6ff;
+    background-color: rgb(248, 221, 189);
     display: flex;
     align-items: center ;
     justify-content: center ;
@@ -32,7 +32,7 @@
         margin-top: 10px;
         cursor: pointer;
         padding: 10px 45px;
-        background-color: #512da8;
+        background-color: rgb(157, 115, 65);
         color: #fff;
         font-size: 12px;
         border: 1px solid transparent;
@@ -94,7 +94,7 @@
         overflow: hidden;
         transition: all 0.6s ease-out;
         z-index: 1000;
-        background-color: #512da8;
+        background-color: rgb(157, 115, 65);
         border-radius:  150px 0 0 100px;
     }
     .toggle-panel{

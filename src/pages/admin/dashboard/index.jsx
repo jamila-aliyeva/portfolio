@@ -5,14 +5,21 @@ import avatar from "../../../assets/images/avatar.jpeg";
 import { getSkills, skillName } from "../../../redux/slice/skils";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { educationName, getEducations } from "../../../redux/slice/education";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
   const { total, loading } = useSelector((state) => state[skillName]);
+  const { EduTotal } = useSelector((state) => state[educationName]);
 
   useEffect(() => {
     dispatch(getSkills({ total, loading }));
   }, [dispatch, total, loading]);
+
+  useEffect(() => {
+    dispatch(getEducations({ EduTotal, loading }));
+  }, [dispatch, EduTotal, loading]);
+
   return (
     <section>
       <div className="container">
@@ -33,7 +40,7 @@ const DashboardPage = () => {
           <div>
             <h2>Skills: {total}</h2>
             <h2>Portfolio: {0}</h2>
-            <h2>Education: {0}</h2>
+            <h2>Education: {total}</h2>
             <h2>Experiences: {0}</h2>
           </div>
         </div>

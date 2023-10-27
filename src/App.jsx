@@ -5,7 +5,6 @@ import HomePage from "./pages/public/home";
 import DashboardPage from "./pages/admin/dashboard";
 
 import AdminLayout from "./components/layout/admin";
-import Experience from "./pages/admin/Experience";
 import Education from "./pages/admin/education";
 import Portfolio from "./pages/admin/portfolios";
 import Skills from "./pages/admin/skillls";
@@ -14,6 +13,7 @@ import { authName } from "./redux/slice/auth";
 import Register from "./pages/public/register";
 import Userpage from "./pages/admin/user";
 import OneEducation from "./pages/admin/one-education";
+import Experience from "./pages/admin/experience";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state[authName]);

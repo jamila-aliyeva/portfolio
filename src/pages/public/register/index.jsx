@@ -9,16 +9,18 @@ import { useNavigate } from "react-router-dom";
 // import "./style.scss";
 import request from "../../../sever";
 import { message } from "antd";
+import { useEffect } from "react";
+import AOS from "aos";
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const submit = async (user) => {
-    // e.preventDefault();
-    // let user = {
-    //   username: e.target.username.value,
-    //   password: e.target.password.value,
-    // };
+  const submit = async (e) => {
+    e.preventDefault();
+    let user = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+    };
     try {
       message.success("Successfully registered!");
       let res = await request.post("auth/register", user);
@@ -30,11 +32,18 @@ const Register = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    AOS.init({ duration: "1600" });
+  }, []);
   return (
     <section className="register">
       <div className="container">
         <div className="form-wrap">
-          <div className="form-container" style={{ marginTop: "30px" }}>
+          <div
+            className="form-container"
+            style={{ marginTop: "30px" }}
+            data-aos="flip-left">
             <h1
               style={{
                 textAlign: "center",
