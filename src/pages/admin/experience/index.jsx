@@ -11,6 +11,7 @@ import {
 } from "antd";
 
 import {
+  useCreateExperienceMutation,
   useDeleteExperienceMutation,
   useGetExperienceMutation,
   // useCreateExperienceMutation,
@@ -36,7 +37,7 @@ const Experience = () => {
     refetch,
   } = useGetExperiencesQuery({ page, search });
 
-  // const [createExperience] = useCreateExperienceMutation();
+  const [createExperience] = useCreateExperienceMutation();
   const [getExperience] = useGetExperienceMutation();
   const [updateExperience] = useUpdateExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
