@@ -12,10 +12,12 @@ import {
 
 import {
   useDeleteExperienceMutation,
+  useGetExperienceMutation,
   // useCreateExperienceMutation,
   // useGetExperienceMutation,
   // useUpdateExperienceMutation,
   useGetExperiencesQuery,
+  useUpdateExperienceMutation,
 } from "../../../redux/queries/experience";
 
 import { LIMIT } from "../../../constants";
@@ -35,8 +37,8 @@ const Experience = () => {
   } = useGetExperiencesQuery({ page, search });
 
   // const [createExperience] = useCreateExperienceMutation();
-  // const [getExperience] = useGetExperienceMutation();
-  // const [updateExperience] = useUpdateExperienceMutation();
+  const [getExperience] = useGetExperienceMutation();
+  const [updateExperience] = useUpdateExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
 
   const showModal = () => {
