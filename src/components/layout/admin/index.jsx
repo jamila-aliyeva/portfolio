@@ -47,7 +47,7 @@ const AdminLayout = ({ setIsLogin }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}>
-        <div className="admin-logo">{collapsed ? "⚙️" : "Admin"}</div>
+        <div className="admin-logo">{collapsed ? "⚙️" : "A dmin"}</div>
         <Menu
           theme="dark"
           mode="inline"

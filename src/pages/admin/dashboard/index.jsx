@@ -8,19 +8,23 @@ import { educationName, getEducations } from "../../../redux/slice/education";
 import "./style.scss";
 import avatar from "../../../assets/images/avatar.jpeg";
 import { Link } from "react-router-dom";
+import { useGetNotClientQuery } from "../../../redux/queries/notClient";
 
 const DashboardPage = () => {
-  const dispatch = useDispatch();
-  const { total, loading } = useSelector((state) => state[skillName]);
-  const { EduTotal } = useSelector((state) => state[educationName]);
+  // const dispatch = useDispatch();
+  // const { total, loading } = useSelector((state) => state[skillName]);
+  // const { total } = useSelector((state) => state[educationName]);
 
-  useEffect(() => {
-    dispatch(getSkills({ total, loading }));
-  }, [dispatch, total, loading]);
+  // useEffect(() => {
+  //   dispatch(getSkills({ total, loading }));
+  // }, [dispatch, total, loading]);
 
-  useEffect(() => {
-    dispatch(getEducations({ EduTotal, loading }));
-  }, [dispatch, EduTotal, loading]);
+  // useEffect(() => {
+  //   dispatch(getEducations({ EduTotal, loading }));
+  // }, [dispatch, EduTotal, loading]);
+
+  const { data: { users, total } = { users: [], total: 0 } } =
+    useGetNotClientQuery();
 
   return (
     <section>
@@ -30,7 +34,7 @@ const DashboardPage = () => {
           <div className="dashboard-top-bside">
             <div>
               <Link to="/notClient">
-                <Badge count={0} showZero>
+                <Badge count={total} showZero>
                   <Avatar shape="square" size="large" />
                 </Badge>
               </Link>
@@ -49,28 +53,28 @@ const DashboardPage = () => {
               src="https://cdn-icons-png.flaticon.com/512/4624/4624025.png"
               alt=""
             />
-            <h2>Skills: {total}</h2>
+            <h2>Skills</h2>
           </Link>
           <Link to="/portfolios" className="dashboard-card">
             <img
               src="https://icons-for-free.com/iconfiles/png/512/chart+diagram+graph+graph+line+graphs+statistics+icon-1320086012050639555.png"
               alt=""
             />
-            <h2>Portfolio: {0}</h2>
+            <h2>Portfolio</h2>
           </Link>
           <Link to="/education" className="dashboard-card">
             <img
               src="https://cdn-icons-png.flaticon.com/512/10155/10155966.png"
               alt=""
             />
-            <h2>Education: {total}</h2>
+            <h2>Education</h2>
           </Link>
           <Link to="/experiences" className="dashboard-card">
             <img
               src="https://cdn-icons-png.flaticon.com/512/2672/2672346.png"
               alt=""
             />
-            <h2>Experiences: {0}</h2>
+            <h2>Experiences</h2>
           </Link>
         </div>
         <div className="dashboard-middle">
