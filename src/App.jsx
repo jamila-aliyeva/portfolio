@@ -14,6 +14,7 @@ import Register from "./pages/public/register";
 import Userpage from "./pages/admin/user";
 import OneEducation from "./pages/admin/one-education";
 import Experience from "./pages/admin/experience";
+import NotClientUser from "./pages/admin/not-client-user";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state[authName]);
@@ -35,11 +36,13 @@ function App() {
           }>
           {/* <Route path="/" element={<AdminLayout />}> */}
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="users" element={<Userpage />} />
           <Route path="skills" element={<Skills />} />
           <Route path="experiences" element={<Experience />} />
           <Route path="education" element={<Education />} />
           <Route path="education/:educationId" element={<OneEducation />} />
           <Route path="portfolios" element={<Portfolio />} />
+          <Route path="notClient" element={<NotClientUser />} />
           <Route
             path="user"
             element={

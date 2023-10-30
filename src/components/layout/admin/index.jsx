@@ -10,6 +10,7 @@ import {
   DashboardOutlined,
   CopyOutlined,
   BuildOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu, Button, theme, Modal } from "antd";
@@ -46,7 +47,7 @@ const AdminLayout = ({ setIsLogin }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}>
-        <div className="admin-logo">{collapsed ? "PTP" : "PTP admin"}</div>
+        <div className="admin-logo">{collapsed ? "⚙️" : "Admin"}</div>
         <Menu
           theme="dark"
           mode="inline"
@@ -57,6 +58,12 @@ const AdminLayout = ({ setIsLogin }) => {
               icon: <DashboardOutlined />,
               label: <Link to="/dashboard">Dashboard</Link>,
             },
+            {
+              key: "/users",
+              icon: <UserOutlined />,
+              label: <Link to="/users">Users</Link>,
+            },
+
             {
               key: "/skills",
               icon: <CopyOutlined />,
