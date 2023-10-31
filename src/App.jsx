@@ -14,7 +14,9 @@ import Register from "./pages/public/register";
 import Userpage from "./pages/admin/user";
 import OneEducation from "./pages/admin/one-education";
 import Experience from "./pages/admin/experience";
-import NotClientUser from "./pages/admin/not-client-user";
+import NotClientUser from "./pages/admin/noneUser";
+import Messeges from "./pages/admin/messeges";
+import Chat from "./pages/Chat";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state[authName]);
@@ -43,6 +45,8 @@ function App() {
           <Route path="education/:educationId" element={<OneEducation />} />
           <Route path="portfolios" element={<Portfolio />} />
           <Route path="notClient" element={<NotClientUser />} />
+          <Route path="messeges" element={<Messeges />} />
+          <Route path="messeges/:messageId" element={<Chat />} />
           <Route
             path="user"
             element={

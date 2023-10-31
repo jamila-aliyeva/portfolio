@@ -1,0 +1,79 @@
+.messege-section{
+   padding: 40px; 
+   .messege-top{
+    padding-block: 27px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    input{
+        outline: none;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid grey;
+        border-radius: 8px;
+    }
+   }
+   .info-user{
+    h4, p{
+        color: #001529;
+    }
+   }
+   .msg-card-wrapper{
+    padding-block: 13px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+   }
+   .tabs-wrap{
+       display: flex;
+       width: 100%;
+       .select-msg{
+        top: 400px;
+        right: 300px;
+        position: fixed;
+        p{
+        height: 100vh;
+        justify-content: center;
+        display: flex;
+        text-align: center;
+        }
+       }
+   }
+}
+.pagination-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    margin: 40px auto 20px auto;
+    .pagination-button{
+        transition: 0.5s all;
+        padding: 10px;
+        // border: 1px solid #232536;
+        border: none;
+        cursor: pointer;
+        background: #fff;
+        color: #001529  ;
+        border-radius: 5px;
+    }
+    .active-page {
+        transition: 0.5s all;
+       border: 1px solid rgb(0, 132, 255);
+        color: rgb(0, 132, 255)black;
+      }
+      
+      .disabled {
+        transition: 0.5s all;
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+}
+.react-tabs__tab-list{
+    border-bottom: none !important;
+}
+.react-tabs__tab{
+    border: none !important;
+}
+.react-tabs__tab--selected{
+    border-bottom: 1px solid #001529 !important;
+}

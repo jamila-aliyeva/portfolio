@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 
+import "react-tabs/style/react-tabs.css";
 import "aos/dist/aos.css";
 import "antd/dist/reset.css";
 import "./index.css";

@@ -1,0 +1,49 @@
+.one-message{
+    border: 1px solid grey;
+    position: relative;
+    .user-name{
+       box-shadow: 0 5px 5px grey;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        .user-info{
+            h4, p{
+                margin-bottom: 0;
+            }
+            padding: 8px;
+        }
+    }
+}
+.message{
+    box-shadow: 0 0 5px grey;
+    padding: 20px;
+    max-width: 300px;
+    border-radius: 11px;
+}
+.answer-wrap{
+    margin-top: 40px;
+    position: absolute;
+    right: 40px;
+}
+.answer{
+    background: rgb(159, 227, 171);
+    box-shadow: 0 0 3px rgb(159, 227, 171);
+    padding: 20px;
+    max-width: 300px; 
+    border-radius: 11px;
+}
+.chat-btn{
+    width: 100%;
+    position:absolute ;
+    top: 100px;
+}
+.sent-msg{
+    position: absolute;
+    bottom: 0;
+    input{
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        padding: 10px;
+    }
+}

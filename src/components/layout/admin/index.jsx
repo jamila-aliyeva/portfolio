@@ -6,6 +6,7 @@ import {
   MenuUnfoldOutlined,
   LogoutOutlined,
   ProjectOutlined,
+  MessageOutlined,
   LineChartOutlined,
   DashboardOutlined,
   CopyOutlined,
@@ -83,6 +84,11 @@ const AdminLayout = ({ setIsLogin }) => {
               key: "/experiences",
               icon: <ProjectOutlined />,
               label: <Link to="/experiences">Experiences</Link>,
+            },
+            {
+              key: "/messeges",
+              icon: <MessageOutlined />,
+              label: <Link to="/messeges">Messeges</Link>,
             },
             {
               icon: <LogoutOutlined />,

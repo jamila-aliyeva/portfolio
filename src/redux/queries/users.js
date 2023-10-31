@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import createQuery from "../../sever/query";
 
 export const userQuery = createQuery({
@@ -20,6 +21,22 @@ export const userQuery = createQuery({
         url: `users/${id}`,
       }),
     }),
+
+    getNonClientUsers: builder.query({
+      query: (params) => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        method: "GET",
+        url: "users",
+        params,
+      }),
+      transformResponse: (res) => ({
+        users: res.data.map((el) => ({ ...el, key: el._id })),
+        total: res.pagination.total,
+      }),
+    }),
+
     createUser: builder.mutation({
       query: (body) => ({
         method: "POST",
@@ -56,6 +73,7 @@ export { userQuery as default, userName, userReducer };
 
 export const {
   useGetUsersQuery,
+  useGetNonClientUsersQuery,
   useUploadPhotoMutation,
   useCreateUserMutation,
   useGetUserMutation,

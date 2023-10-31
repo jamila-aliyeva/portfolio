@@ -1,14 +1,13 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Badge } from "antd";
 
-import { getSkills, skillName } from "../../../redux/slice/skils";
-import { educationName, getEducations } from "../../../redux/slice/education";
+// import { getSkills, skillName } from "../../../redux/slice/skils";
+// import { educationName, getEducations } from "../../../redux/slice/education";
 
 import "./style.scss";
 import avatar from "../../../assets/images/avatar.jpeg";
 import { Link } from "react-router-dom";
-import { useGetNotClientQuery } from "../../../redux/queries/notClient";
 
 const DashboardPage = () => {
   // const dispatch = useDispatch();
@@ -23,9 +22,6 @@ const DashboardPage = () => {
   //   dispatch(getEducations({ EduTotal, loading }));
   // }, [dispatch, EduTotal, loading]);
 
-  const { data: { users, total } = { users: [], total: 0 } } =
-    useGetNotClientQuery();
-
   return (
     <section>
       <div className="container">
@@ -34,7 +30,7 @@ const DashboardPage = () => {
           <div className="dashboard-top-bside">
             <div>
               <Link to="/notClient">
-                <Badge count={total} showZero>
+                <Badge count={0} showZero>
                   <Avatar shape="square" size="large" />
                 </Badge>
               </Link>
@@ -94,10 +90,6 @@ const DashboardPage = () => {
             </p>
           </div>
           <div>
-            {/* <img
-              src="https://cdn.iconscout.com/icon/premium/png-256-thumb/software-developer-2-910975.png"
-              alt=""
-            /> */}
             <img
               src="https://img.freepik.com/free-vector/colorful-illustration-female-programmer-working_23-2148277397.jpg?size=338&ext=jpg&ga=GA1.1.386372595.1698192000&semt=ais"
               alt=""
