@@ -34,9 +34,9 @@ const HomePage = () => {
                   <Link to="/" onClick={() => setNavOpen(false)}>
                     About us
                   </Link>
-                  <Link to="/contact" onClick={() => setNavOpen(false)}>
+                  {/* <Link hrefLang="#contact" onClick={() => setNavOpen(false)}>
                     Contact us
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="home-btns" data-aos="fade-down">
                   {isAuthenticated ? (
