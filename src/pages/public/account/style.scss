@@ -1,0 +1,18 @@
+.account-section{
+    h1{
+        color: #001529;
+        font-size: 28px;
+    }
+    input{
+        background-color: transparent;
+        border: 1.5px solid rgb(157, 115, 65);
+        border-radius: 15px;
+    }
+    .btn{
+        cursor: pointer;
+        padding: 8px 40px;
+        background-color: rgb(255, 213, 161);
+        border: 1px solid rgb(157, 115, 65) ;
+        border-radius: 10px;
+    }
+}

@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+
+.contact-section{
+    font-family:'Agbalumo' ;
+    padding-top: 196px;
+    .contact-top{
+        padding-bottom:30px ;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        p{
+            margin-bottom: 0px;
+        }
+    }
+    .top-btn{
+        padding: 8px 20px;
+        background-color: rgb(157, 115, 65);
+        border-radius: 5px;
+        border: none;
+        color: #ffff;
+        cursor: pointer;
+    }
+}
+.contact-wrpapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    h2{
+        font-size: 40px;
+        max-width: 378px;
+    }
+    p{
+        color: grey;
+        max-width: 300px;
+    }
+    .btn{cursor: pointer;
+        padding: 10px 50px;
+        border: none;
+        border-radius: 10px;
+        color: #ffff;
+        background-color: rgb(157, 115, 65);
+
+    }
+}

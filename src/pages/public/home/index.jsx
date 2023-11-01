@@ -32,7 +32,7 @@ const HomePage = () => {
                 <Link to="/" onClick={() => setNavOpen(false)}>
                   About us
                 </Link>
-                <Link to="/contact-us" onClick={() => setNavOpen(false)}>
+                <Link to="/contact" onClick={() => setNavOpen(false)}>
                   Contact us
                 </Link>
               </div>
