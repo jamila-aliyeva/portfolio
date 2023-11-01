@@ -17,6 +17,7 @@ import Experience from "./pages/admin/experience";
 import NotClientUser from "./pages/admin/noneUser";
 import Messeges from "./pages/admin/messeges";
 import Chat from "./pages/Chat";
+import Account from "./pages/public/account";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state[authName]);
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Account />} />
 
         <Route
           path="/"

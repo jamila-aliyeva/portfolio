@@ -1,36 +1,36 @@
-import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// // import { toast } from "react-toastify";
-// import Cookies from "js-cookie";
-
-// import { authName } from "../../../redux/slice/auth";
-// import { TOKEN } from "../../../constants";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 // import "./style.scss";
 import request from "../../../sever";
 import { message } from "antd";
-import { useEffect } from "react";
 import AOS from "aos";
+import { TOKEN, USER } from "../../../constants";
+import { setAuth } from "../../../redux/slice/auth";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submit = async (e) => {
     e.preventDefault();
-    let user = {
+    let userData = {
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
       username: e.target.username.value,
       password: e.target.password.value,
     };
-    try {
-      message.success("Successfully registered!");
-      let res = await request.post("auth/register", user);
-      console.log(res);
-      message.success("You have successfully registered");
-      navigate("/user");
-    } catch (err) {
-      message.error(err.response.data.message);
-      console.log(err);
-    }
+
+    const {
+      data: { token, user },
+    } = await request.post("auth/register", userData);
+    console.log(userData);
+
+    Cookies.set(TOKEN, token);
+    localStorage.setItem(USER, JSON.stringify(user));
+
+    dispatch(setAuth(user));
+    message.success("Successfully registered and you are a user");
   };
 
   useEffect(() => {
@@ -52,11 +52,11 @@ const Register = () => {
             </h1>
             <div>
               <form onSubmit={submit}>
-                <input type="text" name="first_name" placeholder="Firstname" />
-                <input type="text" name="last_name" placeholder="Firstname" />
-                <input type="text" name="username" placeholder="Firstname" />
+                <input type="text" name="firstName" placeholder="Firstname" />
+                <input type="text" name="lastName" placeholder="Lastname" />
+                <input type="text" name="username" placeholder="Username" />
                 <input type="password" name="password" placeholder="Password" />
-                <input type="password" placeholder="Confirm password" />
+                {/* <input type="password" placeholder="Confirm password" /> */}
                 <button>Register</button>
               </form>
             </div>

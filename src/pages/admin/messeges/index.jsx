@@ -4,7 +4,7 @@ import request from "../../../sever";
 import { Link } from "react-router-dom";
 
 import "./messege.scss";
-import { message } from "antd";
+import { Spin, message } from "antd";
 
 const Messeges = () => {
   const [data, setData] = useState([]);
@@ -65,46 +65,49 @@ const Messeges = () => {
       <div className="messege-top">
         <h1>Messeges</h1>
       </div>
-      <div className="tabs-wrap">
-        <Tabs className="tabs">
-          <TabList>
-            <Tab>All</Tab>
-            <Tab>New</Tab>
-            <Tab>Personal</Tab>
-          </TabList>
+      <Spin spinning={loading}>
+        <div className="tabs-wrap">
+          <Tabs className="tabs">
+            <TabList>
+              <Tab>All</Tab>
+              <Tab>New</Tab>
+              <Tab>Personal</Tab>
+            </TabList>
 
-          <TabPanel>
-            {loading ? (
-              <h3 className="enter-loading">Loading...</h3>
-            ) : (
-              data.map((elm, i) => (
-                <div key={i} className="msg-card-wrapper">
-                  <img
-                    style={{ width: "50px" }}
-                    src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
-                    alt=""
-                  />
-                  <div className="info-user">
-                    <Link to={`${elm._id}`}>
-                      <h4>{elm.user}</h4>
-                      <p>{elm.message}</p>
-                    </Link>
+            <TabPanel>
+              {loading ? (
+                <h3 className="enter-loading">Loading...</h3>
+              ) : (
+                data.map((elm, i) => (
+                  <div key={i} className="msg-card-wrapper">
+                    <img
+                      style={{ width: "50px" }}
+                      src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+                      alt=""
+                    />
+                    <div className="info-user">
+                      <Link to={`${elm._id}`}>
+                        <h4>{elm.user}</h4>
+                        <p>{elm.message}</p>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
-          </TabPanel>
-          <TabPanel>
-            <h2>Any content 2</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Any content 3</h2>
-          </TabPanel>
-        </Tabs>
-        <div className="select-msg">
-          <p>Select a chat to start messaging</p>
+                ))
+              )}
+            </TabPanel>
+            <TabPanel>
+              <h2>Any content 2</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>Any content 3</h2>
+            </TabPanel>
+          </Tabs>
+          <div className="select-msg">
+            <p>Select a chat to start messaging</p>
+          </div>
         </div>
-      </div>
+      </Spin>
+
       {data.length ? (
         <div className="pagination-buttons">
           <button
