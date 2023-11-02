@@ -1,32 +1,19 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import Cookies from "js-cookie";
-import createQuery from "../../sever/query";
+import { TOKEN } from "../../constants";
 
-export const userQuery = createQuery({
-  reducerPath: "users",
+const usersQuery = createApi({
+  reducerPath: "user",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://ap-portfolio-backend.up.railway.app/api/v1/",
+    prepareHeaders: (headers) => {
+      headers.set("Authorization", `Bearer ${Cookies.get(TOKEN)}`);
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: (params) => ({
-        method: "GET",
-        url: "users",
-        params,
-      }),
-      transformResponse: (res) => ({
-        Users: res.data.map((el) => ({ ...el, key: el._id })),
-        total: res.pagination.total,
-      }),
-    }),
-    getUser: builder.mutation({
-      query: (id) => ({
-        method: "GET",
-        url: `users/${id}`,
-      }),
-    }),
-
-    getNonClientUsers: builder.query({
-      query: (params) => ({
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
         method: "GET",
         url: "users",
         params,
@@ -36,7 +23,28 @@ export const userQuery = createQuery({
         total: res.pagination.total,
       }),
     }),
-
+    getUser: builder.mutation({
+      query: (id) => ({
+        method: "GET",
+        url: `users/${id}`,
+      }),
+      transformResponse: (res) => ({
+        ...res,
+        birthday: res.birthday?.split("T")[0],
+      }),
+    }),
+    getClientUsers: builder.mutation({
+      query: () => ({
+        method: "GET",
+        url: "/users?role=client",
+      }),
+    }),
+    getNonClientUsers: builder.mutation({
+      query: () => ({
+        method: "GET",
+        url: "/users?role=role",
+      }),
+    }),
     createUser: builder.mutation({
       query: (body) => ({
         method: "POST",
@@ -49,6 +57,13 @@ export const userQuery = createQuery({
         method: "PUT",
         url: `users/${id}`,
         body,
+      }),
+    }),
+    upgradeUser: builder.mutation({
+      query: ({ id, values }) => ({
+        method: "PUT",
+        url: `users/${id}`,
+        body: values,
       }),
     }),
     deleteUser: builder.mutation({
@@ -67,16 +82,18 @@ export const userQuery = createQuery({
   }),
 });
 
-const { reducer: userReducer, reducerPath: userName } = userQuery;
+const { reducer: usersReducer, reducerPath: usersName } = usersQuery;
 
-export { userQuery as default, userName, userReducer };
+export { usersQuery as default, usersReducer, usersName };
 
 export const {
   useGetUsersQuery,
-  useGetNonClientUsersQuery,
-  useUploadPhotoMutation,
   useCreateUserMutation,
   useGetUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
-} = userQuery;
+  useUploadPhotoMutation,
+  useUpgradeUserMutation,
+  useGetClientUsersMutation,
+  useGetNonClientUsersMutation,
+} = usersQuery;

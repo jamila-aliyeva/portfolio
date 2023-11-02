@@ -12,7 +12,11 @@ import experienceQuery, {
   experienceName,
   experienceReducer,
 } from "../queries/experience";
-import userQuery, { userName, userReducer } from "../queries/users";
+import usersQuery, { usersName, usersReducer } from "../queries/users";
+import authQuery, {
+  authAccountName,
+  authAccountReducer,
+} from "../queries/account";
 
 const reducer = {
   [authName]: authReducer,
@@ -20,7 +24,8 @@ const reducer = {
   [educationName]: educationReducer,
   [portfolioName]: portfolioReducer,
   [experienceName]: experienceReducer,
-  [userName]: userReducer,
+  [usersName]: usersReducer,
+  [authAccountName]: authAccountReducer,
 };
 
 const store = configureStore({
@@ -29,7 +34,8 @@ const store = configureStore({
     getDefaultMiddleware().concat(
       portfolioQuery.middleware,
       experienceQuery.middleware,
-      userQuery.middleware
+      usersQuery.middleware,
+      authQuery.middleware
     ),
 });
 

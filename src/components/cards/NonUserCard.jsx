@@ -1,13 +1,6 @@
 import { message } from "antd";
 import "./nonUser.scss";
-const NonUserCard = ({
-  id,
-  username,
-  firstName,
-  lastName,
-  changeRole,
-  role,
-}) => {
+const NonUserCard = ({ id, username, firstName, lastName, changeRole }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const key = "updatable";
   const openMessage = () => {
@@ -16,14 +9,6 @@ const NonUserCard = ({
       type: "loading",
       content: "Loading...",
     });
-    setTimeout(() => {
-      messageApi.open({
-        key,
-        type: "success",
-        content: `${username} is now our client`,
-        duration: 2,
-      });
-    }, 1000);
   };
   return (
     <div>

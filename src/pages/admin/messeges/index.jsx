@@ -16,7 +16,6 @@ const Messeges = () => {
     try {
       setLoading(true);
       let res = await request.get(`messages?limit=${10}`);
-      // console.log(res);
       setData(res.data.data);
       setTotalPage(res.data.pagination.total);
     } catch (err) {

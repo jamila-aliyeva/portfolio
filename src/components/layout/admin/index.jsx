@@ -14,10 +14,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-import { Layout, Menu, Button, theme, Modal } from "antd";
+import { Layout, Menu, Button, theme, Modal, Badge } from "antd";
 
 import "./style.scss";
 import { IS_LOGIN } from "../../../constants";
+import { useGetUsersQuery } from "../../../redux/queries/users";
 
 const { Header, Sider, Content } = Layout;
 
@@ -25,6 +26,10 @@ const AdminLayout = ({ setIsLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+
+  const { data: { total } = { users: [], total: 0 } } = useGetUsersQuery({
+    role: "user",
+  });
 
   const {
     token: { colorBgContainer },
@@ -48,7 +53,7 @@ const AdminLayout = ({ setIsLogin }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}>
-        <div className="admin-logo">{collapsed ? "⚙️" : "A dmin"}</div>
+        <div className="admin-logo">{collapsed ? "⚙️" : "Admin"}</div>
         <Menu
           theme="dark"
           mode="inline"
@@ -103,6 +108,8 @@ const AdminLayout = ({ setIsLogin }) => {
           style={{
             padding: 0,
             background: colorBgContainer,
+            display: "flex",
+            justifyContent: "space-between",
           }}>
           <Button
             type="text"
@@ -114,6 +121,27 @@ const AdminLayout = ({ setIsLogin }) => {
               height: 64,
             }}
           />
+
+          <Link
+            to="/notClient"
+            className="notification"
+            style={{
+              paddingInline: "30px",
+            }}>
+            <Badge count={total} showZero s>
+              <img
+                style={{ width: "30px" }}
+                src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/notification-circle-blue-512.png"
+                alt=""
+              />
+            </Badge>
+          </Link>
+          {/* <div>
+              <img style={{ width: "30px" }} src={avatar} alt="" />
+              <div>
+                <h4 style={{ color: "white" }}>someone's name</h4>
+              </div>
+            </div> */}
         </Header>
         <Content
           className="admin-main"

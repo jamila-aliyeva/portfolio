@@ -1,265 +1,285 @@
+import { Button, Flex, Form, Image, Input, Modal, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import request from "../../../sever";
-import { Modal, message, theme } from "antd";
-import { IS_LOGIN } from "../../../constants";
 
 import "./style.scss";
-const Account = ({ setIsLogin }) => {
-  const [data, setData] = useState({});
-  const [changedData, setChangedData] = useState({});
-  const [changedPassword, setChangedPassword] = useState({});
-  const [loading, setLoading] = useState(false);
-  // const [photoLoading, setPhotoLoading] = useState(false);
-  // const [photoID, setPhotoId] = useState([]);
-  const [photo, setPhoto] = useState(null);
+import "react-tabs/style/react-tabs.css";
+
+import { TOKEN, USER } from "../../../constants";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+
+import {
+  useGetUserInfoQuery,
+  useUpdatePasswordMutation,
+  useUpdateUserInfoMutation,
+  useUploadAccountPhotoMutation,
+} from "../../../redux/queries/account";
+import { getUserImage } from "../../../utils/images";
+import { removeAuth } from "../../../redux/slice/auth";
+import request from "../../../sever";
+
+const AccountPage = () => {
+  // e.preventDefault();
+  // const [changedPassword, setChangedPassword] = useState({});
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [photo, setPhoto] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
-  const logout = () => {
-    Modal.confirm({
-      title: "Do you want to exit ?",
-      onOk: () => {
-        navigate("/login");
-        setIsLogin(false);
-        localStorage.removeItem(IS_LOGIN);
-      },
-    });
-  };
+  const { data: user, refetch } = useGetUserInfoQuery();
 
-  const getInfo = async () => {
-    try {
-      setLoading(true);
-      const res = await request.get("auth/me");
-      console.log(res.data);
-      setData(res.data);
-      setChangedData(res.data);
-      setPhoto(res.data?.photo);
-      setChangedPassword({
-        currentPassword: "",
-        newPassword: "",
-      });
-    } catch (err) {
-      message.error("Server Error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const submit = async (e) => {
-    e.preventDefault();
-    try {
-      await request.put("auth/updatedetails", changedData);
-      message.success("Successfull changed");
-    } catch (error) {
-      message.error("Invalid");
-    }
-  };
-
-  const upDatePassword = async (e) => {
-    e.preventDefault();
-    console.log(changedPassword);
-    try {
-      await request.put("auth/password", changedPassword);
-      message.success("Successfull changed");
-      setChangedPassword("");
-    } catch (error) {
-      if (
-        changedPassword.currentPassword === "" ||
-        changedPassword.newPassword === ""
-      ) {
-        message.error("Please Fill");
-      } else if (
-        changedPassword.currentPassword === changedPassword.newPassword
-      ) {
-        message.error("Enter new Password");
-      } else {
-        message.error("Current password is incorrect");
-      }
-    }
-  };
+  const [updateUserInfo] = useUpdateUserInfoMutation();
+  const [uploadAccountPhoto] = useUploadAccountPhotoMutation();
+  const [updatePassword] = useUpdatePasswordMutation();
 
   useEffect(() => {
-    getInfo();
-  }, []);
+    form.setFieldsValue(user);
+  }, [user, form]);
+
+  const uploadImage = async (e) => {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    const { data } = await uploadAccountPhoto(formData);
+    setPhoto(data);
+  };
+
+  const changePassword = async (values) => {
+    try {
+      await updatePassword(values);
+      setShowForm(false);
+      message.success("Password changed successfully");
+      navigate("/");
+    } catch (err) {
+      message.error(err);
+    }
+  };
+
+  const updateUser = async (values) => {
+    await updateUserInfo(values);
+    message.success("Information saved successfully");
+    refetch();
+  };
+
+  const logout = () => {
+    Cookies.remove(TOKEN);
+    localStorage.removeItem(USER);
+    dispatch(removeAuth());
+    navigate("/");
+  };
+
   return (
     <>
-      <section className="account-section">
-        <center style={{ padding: "30px" }}>
-          <h1>Account</h1>
-        </center>
-        <div
-          style={{
-            marginTop: "130px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-          }}>
+      <h1 style={{ textAlign: "center", margin: "40px" }}>Account</h1>
+
+      <Form
+        style={{ display: "flex", justifyContent: "center", height: "100vh" }}
+        form={form}
+        className="register-form"
+        name="register"
+        labelCol={{
+          span: 24,
+        }}
+        wrapperCol={{
+          span: 24,
+        }}
+        onFinish={updateUser}
+        autoComplete="off">
+        <div style={{ display: "flex", gap: "40px" }}>
           <div>
-            <form style={{ maxWidth: "500px" }} onSubmit={submit}>
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                onChange={(e) => {
-                  setChangedData({ ...data, firstName: e.target.value });
-                }}
-                value={changedData?.firstName}
-                name="first_name"
-                className="form-input"
-                placeholder="Firstname"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="LastName"
-                onChange={(e) => {
-                  setChangedData({ ...data, lastName: e.target.value });
-                }}
-                value={changedData?.lastName}
-                name="first_name"
-                className="form-input"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="userName"
-                onChange={(e) => {
-                  setChangedData({ ...data, username: e.target.value });
-                }}
-                value={changedData?.username}
-                name="first_name"
-                className="form-input"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="Fields"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="info"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="Phone Number"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="Birthday"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                placeholder="Adress"
-              />
-              <center style={{ margin: "30px" }}>
-                <button type="submit" className="btn">
-                  Save
-                </button>
-              </center>
-            </form>
-            <form className="form" onSubmit={upDatePassword}>
-              <center>
-                {" "}
-                <h1 className="post-title">Update Password</h1>
-              </center>
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                onChange={(e) => {
-                  setChangedPassword({
-                    ...changedPassword,
-                    currentPassword: e.target.value,
-                  });
-                }}
-                name="currentPassword"
-                placeholder="Current Password"
-                className="form-input"
-              />
-              <input
-                style={{
-                  width: "100%",
-                  marginBottom: "18px",
-                  outline: "none",
-                  padding: "14px",
-                }}
-                type="text"
-                onChange={(e) => {
-                  setChangedPassword({
-                    ...changedPassword,
-                    newPassword: e.target.value,
-                  });
-                }}
-                name="newPassword"
-                placeholder="New Password"
-                className="form-input"
-              />
-            </form>
-            <center style={{ margin: "30px" }}>
-              <button type="submit" className="btn">
-                Change Password
-              </button>{" "}
-              <button className="btn" onClick={logout}>
-                Log out
-              </button>
+            <center>
+              <div>
+                <Image
+                  className="account-image"
+                  style={{
+                    width: "200px",
+                  }}
+                  src={user?.photo ? getUserImage(user.photo) : "loading..."}
+                />
+                <Input
+                  className="upload-btn"
+                  type="file"
+                  onChange={uploadImage}
+                />
+              </div>
             </center>
           </div>
+          <div>
+            <div>
+              <Form.Item
+                label="First name"
+                name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your firstname!",
+                  },
+                ]}>
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Last name"
+                name="lastName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your lastname!",
+                  },
+                ]}>
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your address!",
+                  },
+                ]}>
+                <Input />
+                <Form.Item
+                  style={{ marginTop: "20px" }}
+                  label="Phone number"
+                  name="phoneNumber"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your address!",
+                    },
+                  ]}>
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email address!",
+                    },
+                  ]}>
+                  <Input />
+                </Form.Item>
+              </Form.Item>
+              <Form.Item label="Date of birth" name="birthday">
+                <input
+                  className="date-picker register-date-picker"
+                  type="date"
+                />
+              </Form.Item>
+
+              <Form.Item label="User information" name="info">
+                <Input.TextArea />
+              </Form.Item>
+
+              <Form.Item
+                className="btn-container"
+                wrapperCol={{
+                  offset: 0,
+                  span: 24,
+                }}>
+                <button className="submit-btn" type="submit">
+                  Update Info
+                </button>
+              </Form.Item>
+            </div>
+            <div>
+              <Form
+                name="password"
+                className="reset-password"
+                style={{
+                  paddingTop: "30px",
+                }}
+                labelCol={{
+                  span: 24,
+                }}
+                wrapperCol={{
+                  span: 24,
+                }}
+                onFinish={changePassword}
+                autoComplete="off">
+                <Form.Item
+                  label="Username"
+                  name="username"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your username",
+                    },
+                  ]}>
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  label="Current password"
+                  name="currentPassword"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your current password",
+                    },
+                  ]}>
+                  <Input.Password />
+                </Form.Item>
+
+                <Form.Item
+                  label="New password"
+                  name="newPassword"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your new password",
+                    },
+                  ]}>
+                  <Input.Password />
+                </Form.Item>
+
+                <Form.Item
+                  className="btn-container"
+                  wrapperCol={{
+                    offset: 0,
+                    span: 24,
+                  }}>
+                  <div style={{ marginBottom: "50px" }}>
+                    <Button style={{ marginRight: "20px" }} type="submit">
+                      Update Info
+                    </Button>
+                    <Button style={{ marginRight: "20px" }}>
+                      <Link
+                        onClick={() =>
+                          Modal.confirm({
+                            title: "Do you want to log out ?",
+                            onOk: () => logout(),
+                          })
+                        }>
+                        Logout
+                      </Link>
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </div>
+          </div>
         </div>
-      </section>
+      </Form>
     </>
   );
 };
 
-export default Account;
+export default AccountPage;

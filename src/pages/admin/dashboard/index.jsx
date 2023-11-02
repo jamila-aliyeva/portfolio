@@ -6,7 +6,6 @@ import { Avatar, Badge } from "antd";
 // import { educationName, getEducations } from "../../../redux/slice/education";
 
 import "./style.scss";
-import avatar from "../../../assets/images/avatar.jpeg";
 import { Link } from "react-router-dom";
 
 const DashboardPage = () => {
@@ -26,20 +25,7 @@ const DashboardPage = () => {
     <section>
       <div className="container">
         <div className="dashboard-top">
-          <h3>Welcome back, Admin</h3>
-          <div className="dashboard-top-bside">
-            <div>
-              <Link to="/notClient">
-                <Badge count={0} showZero>
-                  <Avatar shape="square" size="large" />
-                </Badge>
-              </Link>
-            </div>
-            <img src={avatar} alt="" />
-            <div>
-              <h4>someone's name</h4>
-            </div>
-          </div>
+          {/* <h3>Welcome back, Admin</h3> */}
         </div>
         <h2 className="dashboard-title">Dashboard</h2>
         <h1>Overview</h1>

@@ -1,43 +1,117 @@
-import { Table, message } from "antd";
-import NonUserCard from "../../../components/cards/NonUserCard";
 import {
-  useGetNonClientUsersQuery,
+  Button,
+  Flex,
+  Input,
+  Modal,
+  Pagination,
+  Select,
+  Space,
+  Table,
+  message,
+} from "antd";
+import { LIMIT } from "../../../constants";
+import { Fragment, useState } from "react";
+import {
   useGetUserMutation,
-  useUpdateUserMutation,
+  useGetUsersQuery,
+  useUpgradeUserMutation,
 } from "../../../redux/queries/users";
 
 const NotClientUser = () => {
-  const [updateUser] = useUpdateUserMutation();
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const {
     data: { users, total } = { users: [], total: 0 },
-    refetch,
     isFetching,
-  } = useGetNonClientUsersQuery({ page: 1, role: "user" });
+    refetch,
+  } = useGetUsersQuery({ role: "user", page, search, limit: LIMIT });
+  console.log(users);
+
+  const [AddUser] = useUpgradeUserMutation();
   const [getUser] = useGetUserMutation();
 
-  const changeRole = async (id) => {
-    // const { data } = await getUser(id);
-    await updateUser(id).unwrap();
-    refetch();
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
   };
 
+  const upgradeToClient = async (id) => {
+    const values = await getUser(id);
+    values.role = "client";
+    await AddUser({ id, values });
+    refetch();
+    message.success("User is added to client");
+  };
+
+  const columns = [
+    {
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+    },
+    {
+      title: "Fullname",
+      render: (_, row) =>
+        `${row?.user?.firstName ?? "FullName is empty"} ${
+          row?.user?.lastName ?? ""
+        }`,
+    },
+    {
+      title: "Action",
+      dataIndex: "birthday",
+      key: "birthday",
+      render: (id) => (
+        <Space size="middle">
+          <Button onClick={() => upgradeToClient(id)}>Add to Client</Button>
+        </Space>
+      ),
+    },
+  ];
   return (
-    <div>
-      <h1>Not Client Users ({total})</h1>
-      {users.map((user) => (
-        <NonUserCard
-          key={user._id}
-          id={user._id}
-          role={user.role}
-          username={user.username}
-          firstName={user.firstName}
-          lastName={user.lastName}
-          changeRole={changeRole}
-          loading={isFetching}
+    <Fragment>
+      <Table
+        className="skills-table"
+        scroll={{
+          x: 1000,
+        }}
+        pagination={false}
+        loading={isFetching}
+        dataSource={users}
+        columns={columns}
+        title={() => (
+          <Fragment>
+            <Flex
+              className="table-title"
+              align="center"
+              justify="space-between">
+              <h1 className="skills-title">Non-Clients </h1>
+              <Input
+                className="search-input"
+                value={search}
+                onChange={handleSearch}
+                style={{
+                  width: "auto",
+                  flexGrow: 1,
+                  marginRight: "30px",
+                  marginLeft: "30px",
+                }}
+                placeholder="Searching..."
+              />
+            </Flex>
+          </Fragment>
+        )}
+      />
+      {total > LIMIT ? (
+        <Pagination
+          className="pagination"
+          total={total}
+          pageSize={LIMIT}
+          current={page}
+          onChange={(page) => setPage(page)}
         />
-      ))}
-    </div>
+      ) : null}
+    </Fragment>
   );
 };
 
